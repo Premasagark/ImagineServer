@@ -11,7 +11,12 @@ const app = express()
 
 app.use(express.json())
 app.use(cors()) 
-await connectDB()
+connectDB()
+  .then(() => {
+    app.listen(PORT, () => console.log("Server running..."));
+  })
+  .catch((err) => console.log("DB connection failed:", err));
+
 
 app.use('/api/user', userRouter)
 app.use('/api/image', imageRouter)
